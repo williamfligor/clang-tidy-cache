@@ -24,3 +24,6 @@ require (
 	google.golang.org/grpc v1.40.1 // indirect
 	google.golang.org/protobuf v1.27.1 // indirect
 )
+require (
+	github.com/google/shlex v0.0.0-20191202100458-e7afc7fbc510
+)
