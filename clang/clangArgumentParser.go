@@ -30,8 +30,13 @@ func ParseClangCommandString(commands string) (*CompilerCommand, error) {
 
 	for i := 0; i < len(words); {
 		if words[i] == "-c" && (i+1) < len(words) {
-			cmd.InputPath = words[i+1]
-			i += 2
+			if words[i+1] == "--" {
+				cmd.InputPath = words[i+2]
+				i += 3
+			} else {
+				cmd.InputPath = words[i+1]
+				i += 2
+			}
 			continue
 		}
 
@@ -53,7 +58,7 @@ func ParseClangCommandString(commands string) (*CompilerCommand, error) {
 		i++
 	}
 
-	if len(cmd.InputPath) == 0 || len(cmd.OutputPath) == 0 {
+	if len(cmd.InputPath) == 0 && len(cmd.OutputPath) == 0 {
 		return nil, errors.New("Unable to determine input or output path")
 	}
 
