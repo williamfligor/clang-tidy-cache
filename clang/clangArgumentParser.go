@@ -91,7 +91,6 @@ func EvaluatePreprocessedFile(buildRoot string, command *CompilerCommand) ([]byt
 	} else {
 		args = append(args, "-E", "-o", filename, command.InputPath)
 	}
-	fmt.Println("args:", args)
 
 	// run the preprocessor
 	cmd := exec.Command(command.Compiler, args...)
