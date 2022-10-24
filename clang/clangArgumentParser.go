@@ -30,14 +30,16 @@ func ParseClangCommandString(commands string) (*CompilerCommand, error) {
 
 	for i := 0; i < len(words); {
 		if words[i] == "-c" && (i+1) < len(words) {
-			if words[i+1] == "--" {
+			// For CMake on Windows, the input path is separated from -c by a "--"
+			if words[i+1] == "--" && (i+2) < len(words) {
 				cmd.InputPath = words[i+2]
 				i += 3
+				continue
 			} else {
 				cmd.InputPath = words[i+1]
 				i += 2
+				continue
 			}
-			continue
 		}
 
 		if (words[i] == "-o" || words[i] == "/Fo") && (i+1) < len(words) {
