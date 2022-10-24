@@ -60,7 +60,7 @@ func ParseClangCommandString(commands string) (*CompilerCommand, error) {
 		i++
 	}
 
-	if len(cmd.InputPath) == 0 && len(cmd.OutputPath) == 0 {
+	if len(cmd.InputPath) == 0 || len(cmd.OutputPath) == 0 {
 		return nil, errors.New("Unable to determine input or output path")
 	}
 
