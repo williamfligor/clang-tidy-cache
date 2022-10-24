@@ -3,14 +3,15 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/ejfitzgerald/clang-tidy-cache/caches"
-	"github.com/ejfitzgerald/clang-tidy-cache/clang"
 	"io"
 	"io/ioutil"
 	"os"
 	"os/exec"
 	"os/user"
 	"path"
+
+	"github.com/ejfitzgerald/clang-tidy-cache/caches"
+	"github.com/ejfitzgerald/clang-tidy-cache/clang"
 )
 
 const VERSION = "0.3.0"
@@ -179,9 +180,11 @@ func evaluateTidyCommand(cfg *Configuration, wd string, args []string, cache cac
 		// this is "hopefully" the general case where we get a cache hit and this means that we need to do nothing
 		// further
 		if cacheContent != nil {
+			fmt.Printf("cache hit\n\n")
 			return nil
 		}
 	}
+	fmt.Printf("cache miss\n\n")
 
 	// we need to run the command
 	stdout, _, err := runClangTidyCommand(cfg, args)
