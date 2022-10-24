@@ -87,9 +87,9 @@ func EvaluatePreprocessedFile(buildRoot string, command *CompilerCommand) ([]byt
 	args := make([]string, 0, len(command.Arguments)+10)
 	args = append(args, command.Arguments...)
 	if strings.Contains(command.Compiler, "clang-cl") {
-		args = append(args, "/P", "/Fi"+filename, command.InputPath)
+		args = append(args, "/P", "/C", "/Fi"+filename, command.InputPath)
 	} else {
-		args = append(args, "-E", "-o", filename, command.InputPath)
+		args = append(args, "-E", "-C", "-o", filename, command.InputPath)
 	}
 
 	// run the preprocessor
