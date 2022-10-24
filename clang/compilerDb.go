@@ -3,10 +3,12 @@ package clang
 import (
 	"encoding/json"
 	"errors"
-	"github.com/ejfitzgerald/clang-tidy-cache/utils"
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"runtime"
+
+	"github.com/ejfitzgerald/clang-tidy-cache/utils"
 )
 
 type DatabaseEntry struct {
@@ -32,6 +34,9 @@ func ExtractCompilationTarget(databaseRootPath string, target string) (*Database
 	defer jsonFile.Close()
 
 	bytes, err := ioutil.ReadAll(jsonFile)
+	if err != nil {
+		return nil, err
+	}
 
 	var db Database
 	err = json.Unmarshal(bytes, &db)
@@ -40,6 +45,12 @@ func ExtractCompilationTarget(databaseRootPath string, target string) (*Database
 	}
 
 	for _, entry := range db {
+		if runtime.GOOS == "windows" {
+			entry.File = utils.PosixifyPath(entry.File)
+			entry.Directory = utils.PosixifyPath(entry.Directory)
+			target = utils.PosixifyPath(target)
+		}
+
 		if entry.File == target || entry.File == filepath.Join(entry.Directory, target) {
 			return &entry, nil
 		}
