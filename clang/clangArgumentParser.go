@@ -30,9 +30,16 @@ func ParseClangCommandString(commands string) (*CompilerCommand, error) {
 
 	for i := 0; i < len(words); {
 		if words[i] == "-c" && (i+1) < len(words) {
-			cmd.InputPath = words[i+1]
-			i += 2
-			continue
+			// For CMake on Windows, the input path is separated from -c by a "--"
+			if words[i+1] == "--" && (i+2) < len(words) {
+				cmd.InputPath = words[i+2]
+				i += 3
+				continue
+			} else {
+				cmd.InputPath = words[i+1]
+				i += 2
+				continue
+			}
 		}
 
 		if (words[i] == "-o" || words[i] == "/Fo") && (i+1) < len(words) {
@@ -62,7 +69,7 @@ func ParseClangCommandString(commands string) (*CompilerCommand, error) {
 
 func EvaluatePreprocessedFile(buildRoot string, command *CompilerCommand) ([]byte, error) {
 	// make the temporary file
-	tmpfile, err := ioutil.TempFile("", "ctc-")
+	tmpfile, err := ioutil.TempFile("", "ctc-*.i")
 	if err != nil {
 		return nil, err
 	}
@@ -79,7 +86,11 @@ func EvaluatePreprocessedFile(buildRoot string, command *CompilerCommand) ([]byt
 	// build up all of the args
 	args := make([]string, 0, len(command.Arguments)+10)
 	args = append(args, command.Arguments...)
-	args = append(args, "-E", "-o", filename, command.InputPath)
+	if strings.Contains(command.Compiler, "clang-cl") {
+		args = append(args, "/P", "/C", "/Fi"+filename, command.InputPath)
+	} else {
+		args = append(args, "-E", "-C", "-o", filename, command.InputPath)
+	}
 
 	// run the preprocessor
 	cmd := exec.Command(command.Compiler, args...)
