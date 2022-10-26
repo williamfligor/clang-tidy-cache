@@ -180,11 +180,9 @@ func evaluateTidyCommand(cfg *Configuration, wd string, args []string, cache cac
 		// this is "hopefully" the general case where we get a cache hit and this means that we need to do nothing
 		// further
 		if cacheContent != nil {
-			fmt.Printf("cache hit\n\n")
 			return nil
 		}
 	}
-	fmt.Printf("cache miss\n\n")
 
 	// we need to run the command
 	stdout, _, err := runClangTidyCommand(cfg, args)
