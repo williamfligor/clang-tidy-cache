@@ -10,8 +10,8 @@ import (
 	"os/user"
 	"path"
 
-	"github.com/ejfitzgerald/clang-tidy-cache/caches"
-	"github.com/ejfitzgerald/clang-tidy-cache/clang"
+	"github.com/williamfligor/clang-tidy-cache/caches"
+	"github.com/williamfligor/clang-tidy-cache/clang"
 )
 
 const VERSION = "0.3.0"
