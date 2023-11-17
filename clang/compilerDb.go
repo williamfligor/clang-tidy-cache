@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"runtime"
 
-	"github.com/ejfitzgerald/clang-tidy-cache/utils"
+	"github.com/williamfligor/clang-tidy-cache/utils"
 )
 
 type DatabaseEntry struct {

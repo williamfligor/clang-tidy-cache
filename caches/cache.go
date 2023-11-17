@@ -2,8 +2,8 @@ package caches
 
 import (
 	"crypto/sha256"
-	"github.com/ejfitzgerald/clang-tidy-cache/clang"
-	"github.com/ejfitzgerald/clang-tidy-cache/utils"
+	"github.com/williamfligor/clang-tidy-cache/clang"
+	"github.com/williamfligor/clang-tidy-cache/utils"
 	"io"
 	"os"
 	"os/exec"

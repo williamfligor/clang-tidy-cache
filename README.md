@@ -24,4 +24,4 @@ For easy integration in your CI system, set `CLANG_TIDY_CACHE_DIR` to a director
 
 To get the latest version checkout the releases page on github:
 
-https://github.com/ejfitzgerald/clang-tidy-cache/releases
+https://github.com/williamfligor/clang-tidy-cache/releases
