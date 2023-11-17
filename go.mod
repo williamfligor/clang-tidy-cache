@@ -1,4 +1,4 @@
-module github.com/ejfitzgerald/clang-tidy-cache
+module github.com/williamfligor/clang-tidy-cache
 
 go 1.17
 
